@@ -7,7 +7,7 @@ import * as Clipboard from 'expo-clipboard';
 const GroupDetails = () => {
   const [loading, setLoading] = useState(false);
   const [group, setGroup] = useState({
-    inviteCode: 'SAMPLE_INVITE_CODE', // Static invite code
+    inviteCode: 'Join123NP', // Static invite code
   });
 
   const copyGroupInviteCode = async () => {

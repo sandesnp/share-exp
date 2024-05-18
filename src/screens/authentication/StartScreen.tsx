@@ -36,7 +36,7 @@ const StartScreen = () => {
           style={styles.btnStarted}
           onPress={() =>
             requestAnimationFrame(() => {
-              navigation.navigate('RegisterScreen');
+              navigation.navigate('LoginScreen');
             })
           }
         >

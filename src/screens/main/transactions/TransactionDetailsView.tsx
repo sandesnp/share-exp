@@ -10,29 +10,32 @@ import {
 } from 'react-native';
 import Colors from '../../../utils/Colors';
 import ImageButton from '../../../components/buttons/ImageButton';
-import { Toast } from 'toastify-react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 
 const TransactionDetailsView = () => {
-  const currentUser = { name: 'John Doe', _id: '1' };
+  const [settle, setSettled] = useState(false);
+  const currentUser = { name: 'Sandesh Shrestha', _id: '1' };
   const staticDetails = [
-    { name: 'John Doe', userId: '1', amount: 10, paid: false },
-    { name: 'Jane Smith', userId: '2', amount: 20, paid: true },
-    { name: 'Michael Brown', userId: '3', amount: 15, paid: false },
+    { name: 'Sandesh Shrestha', userId: '1', amount: 10, paid: true },
+    { name: 'Alice', userId: '2', amount: 20, paid: true },
+    { name: 'Bob', userId: '3', amount: 15, paid: true },
   ];
+  let totalAmount = 0;
+  staticDetails.filter((participant) => {
+    totalAmount += participant.amount;
+  });
   const staticTransaction = {
     title: 'Dinner',
-    totalAmount: 45,
+    totalAmount,
     creatorId: '1',
     participants: ['1', '2', '3'],
   };
-  const staticCreator = { name: 'John Doe', _id: '1' }; // Assuming creator details are static
+  const staticCreator = { name: 'Sandesh Shrestha', _id: '1' }; // Assuming creator details are static
 
   const [details, setDetails] = useState(staticDetails);
   const [transaction, setTransaction] = useState(staticTransaction);
   const [creator, setCreator] = useState(staticCreator);
   const [loading, setLoading] = useState(false);
-  const [deleteLoading, setDeleteLoading] = useState(false);
   const [refresh, setRefresh] = useState(false); // State variable to control refresh state
 
   const onRefresh = () => {
@@ -43,16 +46,6 @@ const TransactionDetailsView = () => {
   };
 
   let sum = 0.0;
-
-  const handleSettleTransaction = (participant) => {
-    const updatedDetails = details.map((p) => {
-      if (p.userId === participant.userId) {
-        return { ...p, paid: !p.paid };
-      }
-      return p;
-    });
-    setDetails(updatedDetails);
-  };
 
   const logoutAlert = () => {
     Alert.alert(
@@ -127,6 +120,7 @@ const TransactionDetailsView = () => {
               $ {transaction.totalAmount}
             </Text>
           </View>
+
           {creator._id === currentUser._id ? (
             <View
               style={{
@@ -148,6 +142,57 @@ const TransactionDetailsView = () => {
               />
             </View>
           ) : null}
+          <View
+            style={{
+              display: 'flex',
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              maxHeight: 60,
+              marginTop: 10,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '400',
+                color:
+                  transaction.creatorId === currentUser._id
+                    ? Colors.NIGHT_GREEN
+                    : 'white',
+                display: 'flex',
+                flex: 1,
+              }}
+              numberOfLines={1}
+            >
+              {creator.name}
+            </Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '500',
+                color: 'white',
+                display: 'flex',
+                flex: 1,
+                textAlign: 'left',
+              }}
+            >
+              Outstanding To:
+            </Text>
+
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '500',
+                color: 'white',
+                display: 'flex',
+                flex: 0.25,
+                textAlign: 'left',
+              }}
+            >
+              Alice
+            </Text>
+          </View>
           {creator ? (
             <View
               style={{
@@ -162,21 +207,6 @@ const TransactionDetailsView = () => {
               <Text
                 style={{
                   fontSize: 16,
-                  fontWeight: '400',
-                  color:
-                    transaction.creatorId === currentUser._id
-                      ? Colors.NIGHT_GREEN
-                      : 'white',
-                  display: 'flex',
-                  flex: 0.5,
-                }}
-                numberOfLines={1}
-              >
-                {creator.name}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 16,
                   fontWeight: '500',
                   color: 'white',
                   display: 'flex',
@@ -184,25 +214,22 @@ const TransactionDetailsView = () => {
                   textAlign: 'left',
                 }}
               >
-                $ {transaction.totalAmount - sum}
+                $7.78
               </Text>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: '500',
-                  color: 'white',
-                  display: 'flex',
-                  flex: 0.25,
-                  textAlign: 'right',
-                }}
-              >
-                Paid
-              </Text>
+
+              <TouchableOpacity style={settle ? styles.btnGreen : styles.btn}>
+                <Text
+                  style={styles.btnText}
+                  onPress={() => setSettled(!settle)}
+                >
+                  {settle ? 'Settled' : 'Settle'}
+                </Text>
+              </TouchableOpacity>
             </View>
           ) : null}
-          <View style={{ marginVertical: 5 }} />
-          {details.map((it) => (
-            <>
+          <View style={{ marginVertical: 20 }} />
+          {details.map((it, index) => (
+            <React.Fragment key={index}>
               <View
                 style={{
                   display: 'flex',
@@ -242,29 +269,19 @@ const TransactionDetailsView = () => {
                 >
                   $ {it.amount}
                 </Text>
-                {it.userId === currentUser._id ? (
-                  <TouchableOpacity
-                    style={styles.btn}
-                    onPress={() => handleSettleTransaction(it)}
-                  >
-                    <Text style={styles.btnText}>
-                      {it.paid ? 'Undo' : 'Settle'}
-                    </Text>
-                  </TouchableOpacity>
-                ) : (
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      fontWeight: '500',
-                      color: it.paid ? Colors.NIGHT_GREEN : Colors.NIGHT_RED,
-                      display: 'flex',
-                      flex: 0.25,
-                      textAlign: 'right',
-                    }}
-                  >
-                    {it.paid ? 'Settled' : 'Not settled'}
-                  </Text>
-                )}
+
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '500',
+                    color: it.paid ? Colors.NIGHT_GREEN : Colors.NIGHT_RED,
+                    display: 'flex',
+                    flex: 0.25,
+                    textAlign: 'right',
+                  }}
+                >
+                  {it.paid ? 'Paid' : 'Unpaid'}
+                </Text>
               </View>
               <View
                 style={{
@@ -272,7 +289,7 @@ const TransactionDetailsView = () => {
                   height: StyleSheet.hairlineWidth,
                 }}
               />
-            </>
+            </React.Fragment>
           ))}
         </>
       ) : (
@@ -294,6 +311,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   btn: {
+    display: 'flex',
+    flex: 0.25,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: Colors.NIGHT_RED,
+    padding: 4,
+    backgroundColor: Colors.NIGHT_RED,
+  },
+  btnGreen: {
     display: 'flex',
     flex: 0.25,
     borderRadius: 4,

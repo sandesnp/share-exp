@@ -22,9 +22,9 @@ const CreateTransactionView = () => {
   const navigation = useNavigation();
   const [title, setTitle] = useState('');
   const [participants, setParticipants] = useState([
-    { _id: '1', name: 'John Doe', amount: 10, paid: false },
-    { _id: '2', name: 'Jane Smith', amount: 20, paid: false },
-    { _id: '3', name: 'Michael Brown', amount: 15, paid: false },
+    { _id: '1', name: 'Sandesh Shrestha', amount: 10, paid: false },
+    { _id: '2', name: 'Alice', amount: 20, paid: false },
+    { _id: '3', name: 'Bob', amount: 15, paid: false },
   ]);
   const [loading, setLoading] = useState(false);
 

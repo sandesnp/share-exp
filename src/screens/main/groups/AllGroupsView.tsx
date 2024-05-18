@@ -19,13 +19,8 @@ const AllGroupsView = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const insets = useSafeAreaInsets();
   const [refresh, setRefresh] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [groups] = useState<Group[]>([
-    { _id: 'group1', name: 'Family Group' },
-    { _id: 'group2', name: 'Flatmates' },
-    { _id: 'group3', name: 'Work Colleagues' },
-    // You can add more groups here
-  ]);
+  const [loading, setLoading] = useState(false);
+  const [groups] = useState<Group[]>([{ _id: 'group1', name: 'Dinner' }]);
 
   const onRefresh = () => {
     setRefresh(true); // Simulate a refresh action

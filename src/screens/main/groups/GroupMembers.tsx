@@ -15,11 +15,15 @@ import { FlashList } from '@shopify/flash-list';
 const GroupMembers = () => {
   const [loading, setLoading] = useState(false);
   const [members, setMembers] = useState([
-    { _id: '1', name: 'John Doe', avatar: 'https://via.placeholder.com/150' },
-    { _id: '2', name: 'Jane Smith', avatar: 'https://via.placeholder.com/150' },
+    {
+      _id: '1',
+      name: 'Sandesh Shrestha',
+      avatar: 'https://via.placeholder.com/150',
+    },
+    { _id: '2', name: 'Alice', avatar: 'https://via.placeholder.com/150' },
     {
       _id: '3',
-      name: 'Michael Brown',
+      name: 'Bob',
       avatar: 'https://via.placeholder.com/150',
     },
   ]);

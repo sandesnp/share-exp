@@ -9,22 +9,30 @@ import NoResultsView from '../../../components/list-items/NoResultsView';
 const PendingTransactionsView = () => {
   const [loading, setLoading] = useState(false);
   const [pendingTransactions, setPendingTransactions] = useState([
-    // Replace this with your static data for pending transactions
-    // Each item should be an object with the same structure as expected
-    // by the TransactionItem component. Here's an example:
     {
       _id: '1',
       groupId: 'group1',
       creatorId: 'user1',
       title: 'Dinner',
-      totalAmount: 50.0,
+      totalAmount: 45.0,
       participants: [
         { userId: 'user2', amount: 20.0, paid: false },
         { userId: 'user3', amount: 15.0, paid: true },
         { userId: 'user4', amount: 15.0, paid: false },
       ],
     },
-    // You can add more transaction objects here
+    {
+      _id: '2',
+      groupId: 'group1',
+      creatorId: 'user1',
+      title: 'Grocery',
+      totalAmount: 135.0,
+      participants: [
+        { userId: 'user2', amount: 20.0, paid: false },
+        { userId: 'user3', amount: 15.0, paid: true },
+        { userId: 'user4', amount: 15.0, paid: false },
+      ],
+    },
   ]);
 
   const onRefresh = () => {

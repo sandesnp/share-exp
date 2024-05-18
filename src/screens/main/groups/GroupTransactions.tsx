@@ -10,7 +10,7 @@ const GroupTransactions = () => {
   const [groupTransactions, setGroupTransactions] = useState([
     {
       _id: '1',
-      name: 'John Doe',
+      name: 'Sandesh',
       amount: 100,
       category: 'Food',
       date: '2024-05-13',

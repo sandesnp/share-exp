@@ -23,6 +23,13 @@ const LoginScreen = ({ navigation }: LoginProps) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const navigateToRegisterScreen = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'RegisterScreen' }],
+    });
+  };
+
   const handleSignIn = async () => {
     if (email.trim() === '' || password.trim() === '') {
       Alert.alert('Input is empty', 'Please enter correct details!');
@@ -31,12 +38,11 @@ const LoginScreen = ({ navigation }: LoginProps) => {
     } else {
       setLoading(true);
       try {
-        // Simulate login with static data (replace with your logic)
         const users = [
           {
-            email: 'user1@example.com',
-            password: 'password1',
-            name: 'John Doe',
+            email: 'Sandesh@yahoo.com',
+            password: 'sandesh123',
+            name: 'Sandesh Shrestha',
           },
           {
             email: 'user2@example.com',
@@ -133,7 +139,13 @@ const LoginScreen = ({ navigation }: LoginProps) => {
         }}
       >
         <Text style={{ color: Colors.DARK_GRAY }}>Don't have an account</Text>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          onPress={() =>
+            requestAnimationFrame(() => {
+              navigation.navigate('RegisterScreen');
+            })
+          }
+        >
           <Text
             style={{ marginStart: 4, color: Colors.BLUE, fontWeight: '500' }}
           >

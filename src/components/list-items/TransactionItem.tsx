@@ -13,19 +13,19 @@ interface TransactionItemProps {
     title: string;
     totalAmount: number;
     participants: { userId: string; amount: number; paid: boolean }[];
-    createdAt: string; // Assuming createdAt is a string representation of the date
+    createdAt?: string; // Assuming createdAt is a string representation of the date
   };
 }
 
 const TransactionItem = ({ item }: TransactionItemProps) => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
-  const [currentUser] = useState({ _id: 'user1', name: 'John Doe' }); // Replace with your static current user data
-  const [group] = useState({ name: 'Dinner Group' }); // Replace with your static group data (if applicable)
+  const [currentUser] = useState({ _id: '1', name: 'Sandesh Shrestha' }); // Replace with your static current user data
+  const [group] = useState({ name: 'Food Stuff' }); // Replace with your static group data (if applicable)
   const [participantNames] = useState([
     'Alice',
     'Bob', // Replace with names of participants
   ]);
-  const [creator] = useState({ name: 'Charles' }); // Replace with name of creator
+  const [creator] = useState({ name: 'Alice' }); // Replace with name of creator
 
   const renderViewMore = (onPress) => (
     <Text style={{ color: Colors.BLUE }} onPress={onPress}>
@@ -37,6 +37,13 @@ const TransactionItem = ({ item }: TransactionItemProps) => {
       View less
     </Text>
   );
+  const date: Date = new Date(); // Create a Date instance
+  const options: Intl.DateTimeFormatOptions = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  };
+  const formattedDate: string = date.toLocaleDateString('en-GB', options); // 'en-GB' for day-month-year format
 
   return (
     <TouchableOpacity
@@ -121,7 +128,7 @@ const TransactionItem = ({ item }: TransactionItemProps) => {
               on{' '}
             </Text>
             <Text style={{ fontWeight: '300', color: 'white', fontSize: 15 }}>
-              {new Date(item.createdAt).toDateString()}
+              {formattedDate}
             </Text>
           </View>
           <View
